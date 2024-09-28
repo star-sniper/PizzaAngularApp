@@ -1,0 +1,118 @@
+.pizza-order-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .pizza-options, .order-summary, .offers-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;   
+  }
+  
+  h1, h2, h3 {
+    color: #333;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .pizza-section, .order-summary, .offers-section {
+    margin-bottom: 20px;
+  }
+  
+  .radio-option, .checkbox-option {
+    margin: 10px 0;
+  }
+  
+  .radio-option label, .checkbox-option label {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  input[type="radio"], input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  input.quantity-input {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100px;   
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .reset-button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .offer-button {
+    background-color: #3498db;
+    color: white;
+    width: 100%;
+    text-align: left;
+    margin: 5px 0;
+  }
+  
+  .offer-button:hover, .reset-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .offers {
+    margin-top: 10px;
+  }
+  
+  .offer-item {
+    margin-bottom: 10px;
+  }
+  
+  .order-summary p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .order-summary {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  @media (max-width: 1024px) {
+    .pizza-order-container {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  
+    .pizza-options, .order-summary, .offers-section {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  

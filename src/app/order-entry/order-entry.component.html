@@ -1,0 +1,65 @@
+<div class="pizza-order-container">
+    <div class="pizza-options">
+      <h1>🍕 Pizza Ordering System</h1>
+  
+      <div class="pizza-section">
+        <h2>Select Pizza Size</h2>
+        <div *ngFor="let size of sizes" class="radio-option">
+          <label>
+            <input type="radio" name="size" (change)="selectedSize = size; calculatePrice()">
+            {{ size.name }} - ${{ size.price }}
+          </label>
+        </div>
+      </div>
+  
+      <div class="pizza-section">
+        <h2>Select Quantity</h2>
+        <input type="number" [(ngModel)]="selectedQuantity" min="1" (change)="calculatePrice()" class="quantity-input"/>
+      </div>
+  
+      <div class="pizza-section">
+        <h2>Select Toppings</h2>
+  
+        <h3>Veg Options</h3>
+        <div *ngFor="let topping of vegToppings" class="checkbox-option">
+          <label>
+            <input type="checkbox" (change)="toggleTopping(topping)">
+            {{ topping.name }} - ${{ topping.price }}
+          </label>
+        </div>
+  
+        <h3>Non-Veg Options</h3>
+        <div *ngFor="let topping of nonVegToppings" class="checkbox-option">
+          <label>
+            <input type="checkbox" (change)="toggleTopping(topping)">
+            {{ topping.name }} - ${{ topping.price }}
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <p><strong>Selected Size:</strong> {{ selectedSize?.name || 'None' }}</p>
+      <p><strong>Selected Toppings:</strong> {{ getToppingNames() }}</p>
+      <p><strong>Quantity:</strong> {{ selectedQuantity }}</p>
+  
+      <div *ngIf="totalPrice < originalPrice">
+        <p><strong>Original Price:</strong> <span style="text-decoration: line-through;">${{ originalPrice.toFixed(2) }}</span></p>
+        <p><strong>Offer Applied:</strong> {{ appliedOfferName || 'None' }}</p>
+      </div>
+  
+      <p><strong>Total Price:</strong> ${{ totalPrice.toFixed(2) }}</p>
+      <button class="reset-button" (click)="resetOrder()">Reset Order</button>
+    </div>
+  
+    <div class="offers-section">
+      <h2>Available Offers</h2>
+      <div class="offers">
+        <div *ngFor="let offer of offers" class="offer-item">
+          <button class="offer-button" (click)="applyOffer(offer)">{{ offer.name }}: {{ offer.description }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
