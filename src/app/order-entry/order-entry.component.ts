@@ -58,50 +58,57 @@ export class OrderEntryComponent {
       this.appliedOfferName = null;  
       return;
     }
-
+  
     this.originalPrice = this.selectedSize.price * this.selectedQuantity + this.calculateToppingPrice(this.selectedToppings);
-
-    let discountedPrice = 0;  // Reset discounted price
-    this.appliedOfferName = null;  // Reset offer name initially
-
-    for (let i = 0; i < this.selectedQuantity; i++) {
+  
+    let discountedPrice = 0;  
+    this.appliedOfferName = null;   
+    let pizzaCount = this.selectedQuantity;
+  
+    while (pizzaCount > 0) {
       let singlePizzaPrice = this.selectedSize.price;
-
+  
       // Medium Pizza Offers
       if (this.selectedSize.name.toLowerCase() === 'medium') {
         if (this.selectedToppings.length === 2) {
-          // Offer 1: $5 per medium pizza with 2 toppings
           singlePizzaPrice = 5;
+          discountedPrice += singlePizzaPrice;
           this.appliedOfferName = 'Medium Pizza with 2 toppings for $5';  
-        } else if (this.selectedQuantity === 2 && this.selectedToppings.length === 4) {
-          // Offer 2: $9 for 2 medium pizzas with 4 toppings each
-          discountedPrice = 9;   
-          this.appliedOfferName = '2 Medium Pizzas with 4 toppings each for $9';  
-          break;   
-        } else {
+        } 
+        else if (pizzaCount >= 2 && this.selectedToppings.length === 4) {
+          discountedPrice += 9;  
+          pizzaCount -= 2;   
+          this.appliedOfferName = '2 Medium Pizzas with 4 toppings each for $9';
+          continue;  
+        } 
+        else {
           singlePizzaPrice = this.selectedSize.price + this.calculateToppingPrice(this.selectedToppings);
-          this.appliedOfferName = 'None';  
-        }
-      } 
-
-      // Large Pizza Offers
-      else if (this.selectedSize.name.toLowerCase() === 'large') {
-        // Offer 3: 50% off for a large pizza with exactly 4 valid toppings
-        const toppingCount = this.countValidToppings();
-        if (toppingCount === 4) {
-          singlePizzaPrice = (this.selectedSize.price + this.calculateToppingPrice(this.selectedToppings)) * 0.5;
-          this.appliedOfferName = '1 Large Pizza with 4 toppings (Pepperoni and BBQ Chicken count as 2) - 50% off';  
-        } else {
-          singlePizzaPrice = this.selectedSize.price + this.calculateToppingPrice(this.selectedToppings);  
+          discountedPrice += singlePizzaPrice;
           this.appliedOfferName = 'None';  
         }
       }
-
-      discountedPrice += singlePizzaPrice;
+  
+      // Large Pizza Offers
+      else if (this.selectedSize.name.toLowerCase() === 'large') {
+        const toppingCount = this.countValidToppings();
+        if (toppingCount === 4) {
+          singlePizzaPrice = (this.selectedSize.price + this.calculateToppingPrice(this.selectedToppings)) * 0.5;
+          discountedPrice += singlePizzaPrice;
+          this.appliedOfferName = '1 Large Pizza with 4 toppings (Pepperoni and BBQ Chicken count as 2) - 50% off';  
+        } else {
+          singlePizzaPrice = this.selectedSize.price + this.calculateToppingPrice(this.selectedToppings);  
+          discountedPrice += singlePizzaPrice;
+          this.appliedOfferName = 'None';  
+        }
+      }
+  
+      pizzaCount--;   
     }
-
+  
     this.totalPrice = discountedPrice;
   }
+  
+  
 
   calculateToppingPrice(toppings: Topping[]): number {
     return toppings.reduce((sum, topping) => sum + topping.price, 0);
